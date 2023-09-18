@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ekranPowitalny">
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="58dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/helpmark" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:text="Witaj, Gaduło!"
+        android:textAlignment="center"
+        android:textColor="@color/mint"
+        android:textSize="28sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dzisiejsza liczba słów:"
+        android:textAlignment="center"
+        android:textColor="@color/mint"
+        android:textSize="20sp" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/outline_rectangle_24"/>
+
+    <Button
+        android:id="@+id/colorButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectanglebtn"
+        android:backgroundTint="@color/mint"
+        android:text="Powiadomienia"
+        android:textColor="@color/mint" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/mint"
+        android:text = "Badanie nastroju"
+        android:background = "@drawable/btnborder"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "Rozpoznanie mowy"
+        android:textColor="@color/mint"
+        android:background = "@drawable/btnback"/>
+
+
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="58dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/settingsmark" />
+
+</LinearLayout>
