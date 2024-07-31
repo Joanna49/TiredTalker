@@ -1,5 +1,7 @@
-<vector android:height="45dp"
-    android:tint="#92EEDC"
+<vector
+    android:alpha="0.6"
+    android:height="45dp"
+    android:tint="#373017"
     android:viewportHeight="24"
     android:viewportWidth="24"
     android:width="45dp"

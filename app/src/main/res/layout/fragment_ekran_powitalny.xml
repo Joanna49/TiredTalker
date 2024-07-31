@@ -1,70 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ekranPowitalny">
+    android:background="@color/light_blue">
 
-    <!-- TODO: Update blank fragment layout -->
-
-
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="58dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/helpmark" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="57dp"
-        android:text="Witaj, Gaduło!"
-        android:textAlignment="center"
-        android:textColor="@color/mint"
-        android:textSize="28sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Dzisiejsza liczba słów:"
-        android:textAlignment="center"
-        android:textColor="@color/mint"
-        android:textSize="20sp" />
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/outline_rectangle_24"/>
+        android:id="@+id/circleIcon"
+        android:layout_width="277dp"
+        android:layout_height="280dp"
+        android:contentDescription="@string/blue_circle_desc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/blue_circle"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/welcomeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteY="105dp" />
 
-    <Button
-        android:id="@+id/colorButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rectanglebtn"
-        android:backgroundTint="@color/mint"
-        android:text="Powiadomienia"
-        android:textColor="@color/mint" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/mint"
-        android:text = "Badanie nastroju"
-        android:background = "@drawable/btnborder"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "Rozpoznanie mowy"
-        android:textColor="@color/mint"
-        android:background = "@drawable/btnback"/>
-
-
-
-    <ImageButton
+    <TextView
+        android:id="@+id/welcomeText"
         android:layout_width="wrap_content"
-        android:layout_height="58dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/settingsmark" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tired"
+        android:textColor="@color/brown"
+        android:textSize="40sp"
+        app2:layout_constraintBottom_toBottomOf="@+id/circleIcon"
+        app2:layout_constraintEnd_toEndOf="@+id/circleIcon"
+        app2:layout_constraintStart_toStartOf="@+id/circleIcon"
+        app2:layout_constraintTop_toTopOf="@+id/circleIcon"
+        app2:layout_constraintVertical_bias="0.405"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/welcomeText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Talker"
+        android:textColor="@color/brown"
+        android:textSize="40sp"
+        app2:layout_constraintEnd_toEndOf="@+id/circleIcon"
+        app2:layout_constraintStart_toStartOf="@+id/circleIcon"
+        app2:layout_constraintTop_toBottomOf="@+id/welcomeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

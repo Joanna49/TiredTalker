@@ -5,4 +5,7 @@
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="app_widget_description">This is an app widget description</string>
+    <string name="blue_circle_desc">Ikona koła</string>
+    <string name="brown_circle_desc">Ikona koła</string>
+    <string name="darkblue_circle_desc">Ikona koła</string>
 </resources>

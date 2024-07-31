@@ -1,0 +1,44 @@
+
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical"
+android:gravity="center"
+android:background="@color/light_blue">
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nagraj swój głos w celu"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/brown" />
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rozpoznania mowy"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/brown" />
+
+<Button
+    android:id="@+id/buttonRozpoznaj"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Rozpoznaj głos"
+    android:layout_margin="10dp"
+    android:background="@color/dark_blue"
+    android:textColor="@color/brown"/>
+
+
+
+
+
+
+
+
+</LinearLayout>

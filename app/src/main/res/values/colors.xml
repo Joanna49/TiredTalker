@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="dark_blue">#577CFD</color>
+    <color name="brown">#99373017</color>
+    <color name="darkest_blue">#9E282368</color>
+    <color name="light_blue">#9EB0F0</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+
+    /*Niepotrzbne kolory*/
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -7,9 +17,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="mint">#05E3D0</color>
-    <color name="light_blue_50">#FFE1F5FE</color>
-    <color name="light_blue_200">#FF81D4FA</color>
-    <color name="light_blue_600">#FF039BE5</color>
-    <color name="light_blue_900">#FF01579B</color>
+    <color name="sliderColor">#FF9800</color>
+    <color name="green">#5ca854</color>
+    <color name="yellow">#c4ba5e</color>
+    <color name="red">#f29085</color>
+    <color name="closeButton">#f5a88e</color>
+
 </resources>

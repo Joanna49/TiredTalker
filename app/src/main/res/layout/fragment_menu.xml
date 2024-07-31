@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@color/light_blue">
+
+    <Button
+        android:id="@+id/buttonRozpoznaj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/dark_blue"
+        android:text="Rozpoznaj głos"
+        android:textColor="@color/brown" />
+
+    <Button
+        android:id="@+id/buttonLimit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limit słów"
+        android:layout_margin="10dp"
+        android:textColor="@color/brown"/>
+
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Liczba słów:
+      10 000"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/brown"
+        android:fontFamily="@font/font_family"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pozostało:
+        5000"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/brown"
+        android:fontFamily="@font/font_family"/>
+
+</LinearLayout>
