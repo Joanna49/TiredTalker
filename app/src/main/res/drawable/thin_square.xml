@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape
+
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Prostokątna ramka -->
+    <!-- android:height="30dp"-->
+    <!-- android:width="100dp" -->
+    <solid
+        android:color="@android:color/transparent"/>
+    <stroke
+        android:width="3dp"
+        android:color="@color/darkest_blue"/>
+    <corners android:radius="0dp"/>
+</shape>

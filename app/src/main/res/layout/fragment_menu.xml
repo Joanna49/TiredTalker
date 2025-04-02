@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Limit słów"
         android:layout_margin="10dp"
+        android:background="@color/dark_blue"
         android:textColor="@color/brown"/>
 
 
@@ -42,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pozostało:
-        5000"
+         5000"
         android:layout_margin="10dp"
         android:gravity="center"
         android:textSize="18sp"

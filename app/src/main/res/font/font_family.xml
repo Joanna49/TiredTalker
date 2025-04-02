@@ -5,6 +5,6 @@
 <font
     android:fontStyle="normal"
     android:fontWeight="400"
-    android:font="@font/tempofont" />
+    android:font="@font/anticorona" />
 
 </font-family>

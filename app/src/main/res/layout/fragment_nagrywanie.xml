@@ -1,44 +1,126 @@
 
-<LinearLayout
+
+<androidx.constraintlayout.widget.ConstraintLayout
 xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app2="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+xmlns:app="http://schemas.android.com/apk/res-"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:orientation="vertical"
-android:gravity="center"
 android:background="@color/light_blue">
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nagraj swój głos w celu"
         android:layout_margin="10dp"
+        android:layout_marginTop="80dp"
         android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/brown" />
+        android:text="Nagraj swój głos w celu"
+        android:textColor="@color/brown"
+        android:textSize="30sp"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="rozpoznania mowy"
         android:layout_margin="10dp"
         android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/brown" />
+        android:text="rozpoznania mowy"
+        android:textColor="@color/brown"
+        android:textSize="30sp"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.536"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toBottomOf="@+id/textView1" />
 
-<Button
-    android:id="@+id/buttonRozpoznaj"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Rozpoznaj głos"
-    android:layout_margin="10dp"
-    android:background="@color/dark_blue"
-    android:textColor="@color/brown"/>
+    <ImageButton
+        android:id="@+id/nagrywanie_btn"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:background="@drawable/redcircle"
+        android:padding="16dp"
+        android:contentDescription="Przycisk nagrywania"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.50"
+        app2:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nagrywanie_btn"
+        tools:layout_editor_absoluteY="367dp" />
+
+    <ImageView
+        android:id="@+id/circleIcon5"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/empty_circle_desc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/empty_circle"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.5"
+        app2:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/welcomeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteY="310dp" />
+
+    <ImageView
+        android:id="@+id/mice"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:contentDescription="@string/microphone_desc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/microphone"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.498"
+        app2:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/welcomeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteY="452dp" />
+
+    <ImageView
+        android:id="@+id/square"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:contentDescription="@string/thin_square_desc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/thin_square"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.498"
+        app2:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/welcomeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteY="209dp" />
+    <ImageView
+        android:id="@+id/dashed_line"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:contentDescription="@string/dashed_line_desc"
+        android:scaleType="fitCenter"
+        android:src="@drawable/dashed_line"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.498"
+        app2:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/welcomeText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4"
+        tools:layout_editor_absoluteY="209dp" />
 
 
-
-
-
-
-
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
