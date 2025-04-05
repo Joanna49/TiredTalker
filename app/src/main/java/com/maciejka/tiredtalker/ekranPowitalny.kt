@@ -4,6 +4,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -37,7 +40,18 @@ class ekranPowitalny : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ekran_powitalny, container, false)
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        // Opóźnienie 3 sekundy, a potem przejście dalej
+        viewLifecycleOwner.lifecycleScope.launch {
+            delay(3000) // 3 sekundy
+            //zmiana fragmentu:
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, Menu())
+                .commit()
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
