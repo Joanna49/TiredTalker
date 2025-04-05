@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id, ekranPowitalny()) // Użycie ViewBinding tutaj
+                .replace(binding.fragmentContainer.id, ekranPowitalny())
                 .commit()
         }
     }

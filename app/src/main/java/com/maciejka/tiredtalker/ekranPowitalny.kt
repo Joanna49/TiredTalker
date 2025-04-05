@@ -43,9 +43,9 @@ class ekranPowitalny : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Opóźnienie 3 sekundy, a potem przejście dalej
+        // Opóźnienie 5 sekund, a potem przejście dalej
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(3000) // 3 sekundy
+            delay(3000) //
             //zmiana fragmentu:
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, Menu())

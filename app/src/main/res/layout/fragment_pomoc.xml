@@ -9,30 +9,71 @@
     android:background="@color/light_blue">
 
     <ImageButton
-        android:id="@+id/roundedButton1"
+        android:id="@+id/backButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button"
+        android:background="@android:color/transparent"
         android:padding="16dp"
-        android:src="@drawable/question"
+        android:src="@drawable/arrow_back"
         app2:layout_constraintStart_toStartOf="parent"
         app2:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageButton
-        android:id="@+id/roundedButton2"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="28dp"
-        android:background="@drawable/rounded_button"
-        android:padding="16dp"
-        android:src="@drawable/baseline_settings_24"
+    <TextView
+        android:id="@+id/text3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Limit słów możesz określić, klikając w “Limit słów” w menu głównym. Możesz ustawić dowolną ilość słów, aby stale ją monitorować i nie przemęczyć swojego aparatu mowy."
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         app2:layout_constraintBottom_toBottomOf="parent"
         app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.0"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toBottomOf="@+id/text2"
+        app2:layout_constraintVertical_bias="0.2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text2" />
+
+    <TextView
+        android:id="@+id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Tired talker, to aplikacja do rozpoznawania mowy oraz liczenia słów, wypowiadanych w ciągu dnia. "
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app2:layout_constraintBottom_toBottomOf="parent"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="1.0"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toBottomOf="@+id/backButton"
+        app2:layout_constraintVertical_bias="0.187"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:gravity="center"
+        android:text="W celu rozpoznania własnego głosu kliknij “Rozpoznaj głos” w menu głównym. Jeżeli głos nie zostanie rozpoznany, spróbuj przenieść się do cichego pomieszczenia, w którym nie będą przeszkadzały Ci odgłosy z zewnątrz. Skieruj swoje usta do mikrofonu Twojego telefonu i staraj się wypowiedzieć jak najwięcej słów. "
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app2:layout_constraintBottom_toBottomOf="parent"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.0"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toBottomOf="@+id/text1"
+        app2:layout_constraintVertical_bias="0.0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
