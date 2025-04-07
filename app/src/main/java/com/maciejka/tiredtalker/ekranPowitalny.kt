@@ -1,10 +1,12 @@
 package com.maciejka.tiredtalker
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.maciejka.tiredtalker.databinding.FragmentEkranPowitalnyBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -21,6 +23,8 @@ private const val ARG_PARAM2 = "param2"
  */
 
 class ekranPowitalny : Fragment() {
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -33,16 +37,21 @@ class ekranPowitalny : Fragment() {
         }
     }
 
+    private var _binding: FragmentEkranPowitalnyBinding? = null
+    private val binding get() = _binding!!
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        _binding = FragmentEkranPowitalnyBinding.inflate(inflater, container, false)
+        return binding.root
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ekran_powitalny, container, false)
+        //return inflater.inflate(R.layout.fragment_ekran_powitalny, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         // Opóźnienie 5 sekund, a potem przejście dalej
         viewLifecycleOwner.lifecycleScope.launch {
             delay(3000) //
@@ -53,14 +62,7 @@ class ekranPowitalny : Fragment() {
         }
     }
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ekranPowitalny.
-         */
+
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
@@ -70,5 +72,10 @@ class ekranPowitalny : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

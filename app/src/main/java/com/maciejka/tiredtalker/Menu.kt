@@ -17,13 +17,10 @@ class Menu : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentMenuBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,19 +31,32 @@ class Menu : Fragment() {
         }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-        Log.d("SprawdzenieFragmentu", "Menu fragment się załadował")
+        super.onViewCreated(view, savedInstanceState)
+            Log.d("SprawdzenieFragmentu", "Menu fragment się załadował")
 
-    binding.helpButton.setOnClickListener {
-        Log.d("PomocButton", "Kliknięto przycisk Pomoc")
-        pokazFragment(Pomoc())
+        binding.buttonRozpoznaj.setOnClickListener {
+                pokazFragment(Nagrywanie())
+
+        }
+
+        binding.helpButton.setOnClickListener {
+            pokazFragment(Pomoc())
+        }
 
     }
-}
+    public fun MakeLogText(){
+        Log.d("buttonRozpoznaj", "Kliknięto przycisk Rozpoznaj")
+    }
+
         private fun pokazFragment(fragment: Fragment) {
-            val fragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.replace(R.id.fragment_container, fragment, null)
             fragmentTransaction.commit()
             }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
