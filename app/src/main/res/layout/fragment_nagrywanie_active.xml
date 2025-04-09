@@ -8,31 +8,46 @@
     tools:layout_editor_absoluteX="0dp"
     tools:layout_editor_absoluteY="0dp">
 
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:padding="16dp"
+        android:src="@drawable/arrow_back"
+        app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.06"
+        app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="80dp"
         android:gravity="center"
         android:text="Nagraj swój głos w celu"
         android:textColor="@color/brown"
         android:textSize="30sp"
         app2:layout_constraintEnd_toEndOf="parent"
+        app2:layout_constraintHorizontal_bias="0.627"
         app2:layout_constraintStart_toStartOf="parent"
-        app2:layout_constraintTop_toTopOf="parent" />
+        app2:layout_constraintTop_toBottomOf="@+id/backButton" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginTop="36dp"
         android:gravity="center"
         android:text="rozpoznania mowy"
         android:textColor="@color/brown"
         android:textSize="30sp"
         app2:layout_constraintEnd_toEndOf="parent"
-        app2:layout_constraintHorizontal_bias="0.536"
+        app2:layout_constraintHorizontal_bias="0.546"
         app2:layout_constraintStart_toStartOf="parent"
         app2:layout_constraintTop_toBottomOf="@+id/textView1" />
 
@@ -42,11 +57,12 @@
         android:layout_height="85dp"
         android:background="@drawable/redcircle"
         android:padding="16dp"
+        app2:layout_constraintBottom_toBottomOf="@+id/circleIcon5"
+        app2:layout_constraintEnd_toEndOf="@+id/circleIcon5"
+        app2:layout_constraintTop_toTopOf="@+id/circleIcon5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteX="165dp"
-        tools:layout_editor_absoluteY="367dp" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/circleIcon5"
@@ -56,27 +72,27 @@
         android:scaleType="fitCenter"
         android:src="@drawable/empty_circle"
         app2:layout_constraintEnd_toEndOf="parent"
-        app2:layout_constraintHorizontal_bias="0.5"
+        app2:layout_constraintHorizontal_bias="0.471"
         app2:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="310dp" />
+        tools:layout_editor_absoluteY="402dp" />
 
     <ImageView
         android:id="@+id/mice"
         android:layout_width="80dp"
         android:layout_height="100dp"
+        android:layout_marginTop="80dp"
         android:contentDescription="@string/microphone_desc"
         android:scaleType="fitCenter"
         android:src="@drawable/microphone"
         app2:layout_constraintEnd_toEndOf="parent"
-        app2:layout_constraintHorizontal_bias="0.498"
         app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toTopOf="@+id/nagrywanie_btn"
         app:layout_constraintBottom_toTopOf="@id/welcomeText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        tools:layout_editor_absoluteY="452dp" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <ImageView
         android:id="@+id/square"
@@ -106,13 +122,13 @@
         app2:layout_constraintEnd_toEndOf="parent"
         app2:layout_constraintHorizontal_bias="0.498"
         app2:layout_constraintStart_toStartOf="parent"
+        app2:layout_constraintTop_toBottomOf="@+id/textView2"
         app:layout_constraintBottom_toTopOf="@id/welcomeText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.4"
-        tools:layout_editor_absoluteY="209dp" />
+        app:layout_constraintVertical_bias="0.4" />
 
     <ImageView
         android:id="@+id/sound"
@@ -132,8 +148,8 @@
 
     <ImageView
         android:id="@+id/sound_f"
-        android:layout_width="387dp"
-        android:layout_height="151dp"
+        android:layout_width="382dp"
+        android:layout_height="150dp"
         android:contentDescription="@string/sound_desc"
         android:rotation="90"
         android:src="@drawable/sound"
@@ -143,7 +159,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4"
-        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteX="21dp"
         tools:layout_editor_absoluteY="216dp" />
 
     <ImageView
