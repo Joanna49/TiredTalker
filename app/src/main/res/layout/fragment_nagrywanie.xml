@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/light_blue">
 
-    <!-- 1. Mały ImageButton w lewym górnym rogu -->
+    <!-- Powrót -->
     <ImageButton
         android:id="@+id/backButton"
         android:layout_width="40dp"
@@ -16,16 +16,13 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="15dp" />
 
-    <!-- 2. Tytuł, wyśrodkowany u góry -->
-
-    <!-- 3. Opis, pod tytułem -->
-
+    <!-- Opis 1 -->
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Nagraj swój głos w celu"
+        android:text="Rozpoznaj swój głos"
         android:textColor="@color/brown"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,31 +30,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backButton" />
 
-    <TextView
-        android:id="@+id/descriptionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="rozpoznania mowy"
-        android:textColor="@color/brown"
-        android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
 
-    <!-- 4. Obrazek - prostokąt -->
+    <!--Prostokąt-->
     <ImageView
         android:id="@+id/rectangleImage"
         android:layout_width="387dp"
         android:layout_height="151dp"
         android:src="@drawable/thin_square"
-        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="30dp"
         tools:layout_editor_absoluteY="246dp"/>
 
-    <!-- 5. Obrazek - linia (wewnątrz prostokąta) -->
+    <!-- Linia (wewnątrz prostokąta) -->
     <ImageView
         android:id="@+id/lineImage"
         android:layout_width="366dp"
@@ -69,19 +55,61 @@
         app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
         android:layout_marginTop="12dp" />
 
-    <!-- 6. Obrazek - okrąg -->
+    <!-- Dźwięk1 (wewnątrz prostokąta) -->
+
+    <!-- Dźwięk2 (wewnątrz prostokąta) -->
+
+    <!-- Okrąg - nagrywanie -->
+
+
+    <ImageView
+        android:id="@+id/sound1"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:layout_marginStart="-120dp"/>
+
+    <ImageView
+        android:id="@+id/sound2"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"/>
+
+    <ImageView
+        android:id="@+id/sound3"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:layout_marginStart="120dp"/>
+
+
     <ImageView
 
         android:id="@+id/circleImage"
         android:layout_width="100dp"
         android:layout_height="200dp"
         android:src="@drawable/empty_circle"
-        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="145dp" />
 
-    <!-- 7. Przycisk wewnątrz okręgu -->
+    <!-- Przycisk wewnątrz okręgu - nagrywanie-->
     <ImageButton
 
         android:id="@+id/nagrywanie_btn"
@@ -93,7 +121,7 @@
         app:layout_constraintStart_toStartOf="@id/circleImage"
         app:layout_constraintEnd_toEndOf="@id/circleImage" />
 
-    <!-- 8. Obrazek pod wszystkim -->
+    <!-- Mikrofon -->
     <ImageView
         android:id="@+id/bottomImage"
         android:layout_width="80dp"
