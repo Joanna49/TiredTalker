@@ -5,8 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.maciejka.tiredtalker.databinding.FragmentNagrywanieActiveBinding
-import com.maciejka.tiredtalker.databinding.FragmentNagrywanieBinding
+
 
 
 class nagrywanie_active : Fragment() {
@@ -38,7 +39,10 @@ class nagrywanie_active : Fragment() {
 
         }
 
+        binding.nagrywanieBtn.setOnClickListener {
+            Toast.makeText(requireContext(), "Naciśnięte", Toast.LENGTH_SHORT).show()
 
+        }
 
     }
 

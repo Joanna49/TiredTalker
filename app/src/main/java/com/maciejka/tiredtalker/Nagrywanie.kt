@@ -41,9 +41,7 @@ class Nagrywanie : Fragment() {
 
         }
 
-
     }
-
 
     private fun pokazFragment(fragment: Fragment) {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
