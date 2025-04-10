@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Nagraj swój głos w celu"
+        android:text="Rozpoznaj swój głos"
         android:textColor="@color/brown"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -30,18 +30,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backButton" />
 
-    <!-- Opis 2 -->
-    <TextView
-        android:id="@+id/descriptionText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="rozpoznania mowy"
-        android:textColor="@color/brown"
-        android:textSize="30sp"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp" />
 
     <!--Prostokąt-->
     <ImageView
@@ -49,7 +37,7 @@
         android:layout_width="387dp"
         android:layout_height="151dp"
         android:src="@drawable/thin_square"
-        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="30dp"
@@ -67,6 +55,44 @@
         app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
         android:layout_marginTop="12dp" />
 
+    <!-- Dźwięk1 (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/sound1"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:layout_marginStart="-120dp"/>
+
+    <!-- Dźwięk2 (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/sound2"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"/>
+
+    <!-- Dźwięk3 (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/sound3"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:layout_marginStart="120dp"/>
+
     <!-- Okrąg - nagrywanie -->
     <ImageView
 
@@ -74,7 +100,7 @@
         android:layout_width="100dp"
         android:layout_height="200dp"
         android:src="@drawable/empty_circle"
-        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="145dp" />
