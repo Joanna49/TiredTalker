@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.maciejka.tiredtalker.databinding.FragmentNagrywanieActiveBinding
-import com.maciejka.tiredtalker.databinding.FragmentNagrywanieBinding
+
 
 
 class nagrywanie_active : Fragment() {

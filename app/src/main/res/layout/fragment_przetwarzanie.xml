@@ -1,14 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Przetwarzanie">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_blue">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- Powrót -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="15dp" />
+
+    <!-- Opis 1 -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Przetwarzenie..."
+        android:textColor="@color/brown"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton" />
 
-</FrameLayout>
+
+    <!--Prostokąt-->
+    <ImageView
+        android:id="@+id/rectangleImage"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:src="@drawable/thin_square"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="60dp"
+        tools:layout_editor_absoluteY="246dp"/>
+
+    <!-- Linia (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/lineImage"
+        android:layout_width="366dp"
+        android:layout_height="120dp"
+        android:src="@drawable/dashed_line"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintEnd_toEndOf="@id/rectangleImage"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        android:layout_marginTop="12dp" />
+
+    <!-- Dźwięk1 (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/sound1"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:layout_marginStart="-120dp"/>
+
+    <!-- Dźwięk2 (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/sound2"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"/>
+
+    <!-- Dźwięk3 (wewnątrz prostokąta) -->
+    <ImageView
+        android:id="@+id/sound3"
+        android:layout_width="387dp"
+        android:layout_height="151dp"
+        android:layout_marginTop="12dp"
+        android:rotation="90"
+        android:src="@drawable/sound"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:layout_marginStart="120dp"/>
+
+    <!-- Okrąg - nagrywanie -->
+    <ImageView
+
+        android:id="@+id/circleImage"
+        android:layout_width="100dp"
+        android:layout_height="200dp"
+        android:src="@drawable/empty_circle"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="170dp" />
+
+    <!-- Przycisk wewnątrz okręgu - nagrywanie-->
+    <ImageButton
+
+        android:id="@+id/nagrywanie_btn"
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:background="@drawable/redcircle"
+        app:layout_constraintTop_toTopOf="@id/circleImage"
+        app:layout_constraintBottom_toBottomOf="@id/circleImage"
+        app:layout_constraintStart_toStartOf="@id/circleImage"
+        app:layout_constraintEnd_toEndOf="@id/circleImage" />
+
+    <!-- Mikrofon -->
+    <ImageView
+        android:id="@+id/bottomImage"
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/microphone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nagrywanie_btn" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
