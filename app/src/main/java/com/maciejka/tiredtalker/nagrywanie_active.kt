@@ -40,7 +40,7 @@ class nagrywanie_active : Fragment() {
         }
 
         binding.nagrywanieBtn.setOnClickListener {
-            Toast.makeText(requireContext(), "Naciśnięte", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Nagrywanie jest już włączone", Toast.LENGTH_SHORT).show()
 
         }
 

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_blue">
+
+    <!-- Powrót -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="15dp" />
+
+    <!-- Opis 1 -->
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Ustal dzienny"
+        android:textColor="@color/brown"
+        android:textSize="40sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        android:fontFamily="@font/font_family"/>
+
+    <!-- Opis 2 -->
+    <TextView
+        android:id="@+id/descriptionText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Limit słów"
+        android:textColor="@color/brown"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/font_family"
+        android:textSize="40sp"/>
+
+    <!--Prostokąt-->
+    <ImageView
+        android:id="@+id/rectangleImage"
+        android:layout_width="163dp"
+        android:layout_height="51dp"
+        android:src="@drawable/thin_square"
+        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp"
+        tools:layout_editor_absoluteY="246dp"/>
+
+    <!-- Edycja tekstu (wewnątrz prostokąta) -->
+    <EditText
+        android:id="@+id/numberInput"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/rectangleImage"
+        app:layout_constraintEnd_toEndOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="@id/rectangleImage"
+        app:layout_constraintTop_toTopOf="@id/rectangleImage"
+        android:textColor="@color/brown"
+        android:inputType="number" />
+
+    <!-- Przycisk ustalania limitu -->
+    <FrameLayout
+        android:id="@+id/buttonContainer2"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        app:layout_constraintTop_toBottomOf="@id/rectangleImage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="50dp">
+
+        <ImageButton
+            android:id="@+id/buttonZapis"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/rect_rounded"
+            android:scaleType="fitXY"
+            android:padding="0dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Zapisz zmiany"
+            android:textColor="@color/brown"
+            android:textSize="30sp"
+            android:gravity="center"
+            android:fontFamily="@font/font_family"/>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

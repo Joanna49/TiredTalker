@@ -20,8 +20,6 @@ class Menu : Fragment() {
         return binding.root
     }
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -32,17 +30,24 @@ class Menu : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Wysłanie liczby wprowadzonej w oknie Limit
+        val number = arguments?.getInt("user_number")
+        binding.displayText.text = "Otrzymana liczba: $number"
+
+        //Obsługa przycisków
         binding.buttonRozpoznaj.setOnClickListener {
                 pokazFragment(Nagrywanie())
-
         }
 
         binding.helpButton.setOnClickListener {
             pokazFragment(Pomoc())
         }
 
-    }
+        binding.buttonLimit.setOnClickListener {
+            pokazFragment(Limit())
+        }
 
+    }
 
         private fun pokazFragment(fragment: Fragment) {
             val fragmentTransaction = parentFragmentManager.beginTransaction()

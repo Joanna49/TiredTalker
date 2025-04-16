@@ -36,8 +36,12 @@ class Rozpoznanie : Fragment() {
             pokazFragment(Menu())
 
         }
+        binding.buttonLimit.setOnClickListener {
+            pokazFragment(Limit())
+        }
 
     }
+
 
     private fun pokazFragment(fragment: Fragment) {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
