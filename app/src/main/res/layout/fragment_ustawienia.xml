@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/light_blue">
+
+    <!-- Powrót -->
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/arrow_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="15dp" />
+
+    <!-- Suwak Powiadomień -->
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/notificationSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="30dp"
+        app:showText="true"
+        app:thumbTint="@color/brown"
+        app:trackTint="@color/purple_pud" />
+    <TextView
+        android:id="@+id/notificationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Powiadomienia"
+        android:textSize="20dp"
+        android:textColor="@color/darker_blue"
+        app:layout_constraintTop_toTopOf="@id/notificationSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/notificationSwitch"
+        app:layout_constraintStart_toEndOf="@id/notificationSwitch"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/font_family"/>
+
+    <!-- Suwak Uprawnień do nagrywania -->
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/nagrywanieSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toBottomOf="@id/notificationSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="30dp"
+        app:showText="true"
+        app:thumbTint="@color/brown"
+        app:trackTint="@color/purple_pud" />
+    <TextView
+        android:id="@+id/nagrywanieLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uprawnienia do nagrywania"
+        android:textSize="20dp"
+        android:textColor="@color/darker_blue"
+        app:layout_constraintTop_toTopOf="@id/nagrywanieSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/nagrywanieSwitch"
+        app:layout_constraintStart_toEndOf="@id/nagrywanieSwitch"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/font_family"/>
+
+    <!-- Suwak Dźwięku -->
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/soundSwitch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintTop_toBottomOf="@id/nagrywanieSwitch"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="30dp"
+        app:showText="true"
+        app:thumbTint="@color/brown"
+        app:trackTint="@color/purple_pud" />
+    <TextView
+        android:id="@+id/soundLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dźwięk aplikacji"
+        android:textSize="20dp"
+        android:textColor="@color/darker_blue"
+        app:layout_constraintTop_toTopOf="@id/soundSwitch"
+        app:layout_constraintBottom_toBottomOf="@id/soundSwitch"
+        app:layout_constraintStart_toEndOf="@id/soundSwitch"
+        android:layout_marginStart="16dp"
+        android:fontFamily="@font/font_family"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

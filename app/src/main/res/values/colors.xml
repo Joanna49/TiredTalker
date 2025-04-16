@@ -23,5 +23,8 @@
     <color name="yellow">#c4ba5e</color>
     <color name="red">#f29085</color>
     <color name="closeButton">#f5a88e</color>
+    <color name="purple_pud">#6E282368</color>
+    <color name="darker_blue">#99282368</color>
+
 
 </resources>
