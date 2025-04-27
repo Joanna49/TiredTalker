@@ -17,6 +17,10 @@
         android:layout_margin="15dp" />
 
     <!-- Opis 1 -->
+
+
+    <!--Prostokąt-->
+
     <TextView
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
@@ -25,13 +29,12 @@
         android:text="Rozpoznaj swój głos"
         android:textColor="@color/brown"
         android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backButton" />
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintVertical_bias="0.021" />
 
-
-    <!--Prostokąt-->
     <ImageView
         android:id="@+id/rectangleImage"
         android:layout_width="387dp"

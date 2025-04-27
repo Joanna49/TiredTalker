@@ -42,6 +42,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="8dp" />
+    <TextView
+        android:id="@+id/TextRozpoznaj"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rozpoznaj swój głos"
+        android:textColor="@color/brown"
+        android:textSize="30sp"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
 
     <!--Prostokąt-->
     <ImageView
@@ -49,10 +60,10 @@
         android:layout_width="387dp"
         android:layout_height="151dp"
         android:src="@drawable/thin_square"
-        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="140dp"
         tools:layout_editor_absoluteY="246dp"/>
 
     <!-- Linia (wewnątrz prostokąta) -->
@@ -105,8 +116,6 @@
         app:layout_constraintTop_toTopOf="@id/rectangleImage"
         android:layout_marginStart="120dp"/>
 
-
-
     <!-- Okrąg - nagrywanie -->
     <ImageView
 
@@ -114,10 +123,10 @@
         android:layout_width="100dp"
         android:layout_height="200dp"
         android:src="@drawable/empty_circle"
-        app:layout_constraintTop_toBottomOf="@id/descriptionText"
+        app:layout_constraintTop_toBottomOf="@id/backButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="145dp" />
+        android:layout_marginTop="250dp" />
 
     <!-- Przycisk wewnątrz okręgu - nagrywanie-->
     <ImageButton

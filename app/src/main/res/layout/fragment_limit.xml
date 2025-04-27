@@ -68,8 +68,7 @@
         app:layout_constraintTop_toTopOf="@id/rectangleImage"
         android:textColor="@color/brown"
         android:inputType="number"
-        android:backgroundTint="@color/brown"
-        android:highlightColor="@color/brown"/>
+        android:backgroundTint="@color/brown" />
 
     <!-- Przycisk ustalania limitu -->
     <FrameLayout
@@ -100,5 +99,17 @@
             android:gravity="center"
             android:fontFamily="@font/font_family"/>
     </FrameLayout>
+
+    <!-- Obrazek zatwierdzenia -->
+    <ImageView
+        android:id="@+id/tickImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/check"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rectangleImage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

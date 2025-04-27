@@ -38,7 +38,12 @@ class Menu : Fragment() {
 
         //Odebranie liczby wprowadzonej w oknie Limit
         val limitSlow = arguments?.getInt("user_number")
-        binding.displayText.text = "Otrzymana liczba: $limitSlow"
+
+        if (limitSlow != null) {
+            binding.displayText.text = "Otrzymana liczba: $limitSlow"
+        } else {
+            binding.displayText.text = "Kliknij Limit słów"
+        }
         //TO DO
         //Wyświetlenie liczby pozostałych słów
         //val pozSlow = limitSlow - liczSlow

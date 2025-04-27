@@ -26,13 +26,15 @@ class Limit : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            // Ustaw kolor podświetlenia tekstu na brązowy
+            //binding.numberInput.highlightColor = "#99373017".toColorInt()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonZapis.setOnClickListener {
+
             val inputText = binding.numberInput.text.toString()
             val number = inputText.toIntOrNull()
 
@@ -40,10 +42,7 @@ class Limit : Fragment() {
                 val bundle = Bundle().apply {
                     putInt("user_number", number)
                 }
-                binding.backButton.setOnClickListener {
-                    pokazFragment(Menu())
 
-                }
                 val displayFragment = Menu()
                 displayFragment.arguments = bundle
 
@@ -51,10 +50,23 @@ class Limit : Fragment() {
                     .replace(R.id.fragment_container, displayFragment)
                     .addToBackStack(null)
                     .commit()
+
+                //Obrazek zatwierdzenia
+                binding.tickImage.apply {
+                    setImageResource(R.drawable.check)
+                    visibility = View.VISIBLE
+                }
             } else {
                 Toast.makeText(context, "Wprowadź poprawną liczbę", Toast.LENGTH_SHORT).show()
             }
         }
+        //Obsługa powrotu do menu
+        binding.backButton.setOnClickListener {
+            pokazFragment(Menu())
+
+        }
+        //Obraz fal dźwiękowych niewidoczny przy wejściu
+        binding.tickImage.visibility = View.GONE
     }
 
 

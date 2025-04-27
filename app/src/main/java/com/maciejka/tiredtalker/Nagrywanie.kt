@@ -37,9 +37,26 @@ class Nagrywanie : Fragment() {
                 == PackageManager.PERMISSION_GRANTED) {
                 startRecording()
                 //dodanie obrazka fal dźwiękowych po włączeniu nagrywania
-                binding.sound1.setImageResource(R.drawable.sound)
-                binding.sound2.setImageResource(R.drawable.sound)
-                binding.sound3.setImageResource(R.drawable.sound)
+                binding.sound1.apply {
+                    setImageResource(R.drawable.sound)
+                    visibility = View.VISIBLE
+                }
+                binding.sound2.apply {
+                    setImageResource(R.drawable.sound)
+                    visibility = View.VISIBLE
+                }
+                binding.sound3.apply {
+                    setImageResource(R.drawable.sound)
+                    visibility = View.VISIBLE
+                }
+                // Zmiana tekstu na "Rozpoznaj swój głos"
+                binding.TextRozpoznaj.apply {
+                    visibility = View.VISIBLE
+                }
+                //Ukrycie tekstu "Nagraj swój głos w celu rozpoznania mowy"
+                binding.titleText.visibility = View.GONE
+                binding.descriptionText.visibility = View.GONE
+
             } else {
                 ActivityCompat.requestPermissions(
                     requireActivity(),
@@ -109,6 +126,15 @@ class Nagrywanie : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Obraz fal dźwiękowych niewidoczny przy wejściu
+        binding.sound1.visibility = View.GONE
+        binding.sound2.visibility = View.GONE
+        binding.sound3.visibility = View.GONE
+
+        //Tekst "Rozpoznaj" niewidoczny przy wejściu
+        binding.TextRozpoznaj.visibility = View.GONE
+
+        //Obsługa powrotu do menu
         binding.backButton.setOnClickListener {
             pokazFragment(Menu())
 
