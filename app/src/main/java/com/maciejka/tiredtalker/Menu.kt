@@ -7,6 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.maciejka.tiredtalker.databinding.FragmentMenuBinding
 
+//TO DO: Dodać nagrywanie głosu, jeśli weryfikacja głosu została przeprowadzona. Zastanowić się, czy to nie powinno być w main
+// Dodać obsługę przesyłania plików dźwiękowych do serwera
+//Pozostało: Limit - liczba wypowiedzianych słów
+
+// W pythonie: Rest API google speech to text
+//W pythonie: wysłanie liczby z powrotem do aplikacji
 
 class Menu : Fragment() {
 
@@ -30,9 +36,13 @@ class Menu : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //Wysłanie liczby wprowadzonej w oknie Limit
-        val number = arguments?.getInt("user_number")
-        binding.displayText.text = "Otrzymana liczba: $number"
+        //Odebranie liczby wprowadzonej w oknie Limit
+        val limitSlow = arguments?.getInt("user_number")
+        binding.displayText.text = "Otrzymana liczba: $limitSlow"
+        //TO DO
+        //Wyświetlenie liczby pozostałych słów
+        //val pozSlow = limitSlow - liczSlow
+        //binding.text4.text = "costam: $liczSlow"
 
         //Obsługa przycisków
         binding.buttonRozpoznaj.setOnClickListener {
@@ -45,6 +55,9 @@ class Menu : Fragment() {
 
         binding.buttonLimit.setOnClickListener {
             pokazFragment(Limit())
+        }
+        binding.settingsButton.setOnClickListener {
+            pokazFragment(Ustawienia())
         }
 
     }

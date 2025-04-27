@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.maciejka.tiredtalker.databinding.FragmentUstawieniaBinding
 import android.content.Intent
+import android.net.Uri
 import android.provider.Settings
-
 
 class Ustawienia : Fragment() {
 
@@ -25,8 +25,6 @@ class Ustawienia : Fragment() {
         _binding = FragmentUstawieniaBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +58,16 @@ class Ustawienia : Fragment() {
                     putExtra(Settings.EXTRA_APP_PACKAGE, requireContext().packageName)
                 }
                 startActivity(intent)
+            }
+        }
+
+        // Suwak uprawnień do nagrywania dźwięku
+        binding.nagrywanieSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                //Otwórz uuprawnieia do nagrywania dźwięku
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", requireContext().packageName, null)
+                }
             }
         }
 

@@ -80,7 +80,7 @@
         app:layout_constraintStart_toStartOf="@id/rectangleImage"
         app:layout_constraintTop_toTopOf="@id/rectangleImage"/>
 
-    <!-- Dźwięk3 (wewnątrz prostokąta) -->
+    <!-- Dźwięk (wewnątrz prostokąta) -->
     <ImageView
         android:id="@+id/sound3"
         android:layout_width="387dp"

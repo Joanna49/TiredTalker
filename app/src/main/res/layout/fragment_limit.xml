@@ -67,7 +67,9 @@
         app:layout_constraintStart_toStartOf="@id/rectangleImage"
         app:layout_constraintTop_toTopOf="@id/rectangleImage"
         android:textColor="@color/brown"
-        android:inputType="number" />
+        android:inputType="number"
+        android:backgroundTint="@color/brown"
+        android:highlightColor="@color/brown"/>
 
     <!-- Przycisk ustalania limitu -->
     <FrameLayout
