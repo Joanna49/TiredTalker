@@ -17,12 +17,11 @@ import android.widget.Toast
 import java.io.File
 import java.io.IOException
 
-//TO DO Dodać obsługę przesłania pliku do serwera
-
 class Nagrywanie : Fragment() {
 
     private var mediaRecorder: MediaRecorder? = null
     private var _binding: FragmentNagrywanieBinding? = null
+    private var currentFilePath: String? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -85,6 +84,9 @@ class Nagrywanie : Fragment() {
                 // Zatrzymaj po 15 sekundach
                 Handler(Looper.getMainLooper()).postDelayed({
                     stopRecording()
+                    currentFilePath?.let { path ->
+                    (activity as? MainActivity)?.uploadAudioFile(path)
+                }
                     pokazFragment(Rozpoznanie())
                 }, 15_000)
 
@@ -115,6 +117,8 @@ class Nagrywanie : Fragment() {
         val file = File(requireContext().filesDir, fileName)
         return file.absolutePath
     }
+
+    //Funkcja wysyłająca plik do serwera
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
