@@ -8,7 +8,8 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    private const val BASE_URL = "http://localhost:8000/" // Zamień na URL swojego serwera
+    //private const val BASE_URL = "http://localhost:8000/" // Zamień na URL swojego serwera
+    private const val BASE_URL = "http://192.168.1.1:8000/"
 
     private val retrofit by lazy {
         Retrofit.Builder()
