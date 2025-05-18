@@ -13,9 +13,19 @@ import android.media.MediaRecorder
 import android.Manifest
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
+import com.maciejka.tiredtalker.network.RetrofitClient
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.io.IOException
+
 
 class Nagrywanie : Fragment() {
 
@@ -85,7 +95,7 @@ class Nagrywanie : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     stopRecording()
                     currentFilePath?.let { path ->
-                    (activity as? MainActivity)?.uploadAudioFile(path)
+                    (activity as? Nagrywanie)?.uploadAudioFile(path)
                 }
                     pokazFragment(Rozpoznanie())
                 }, 15_000)
@@ -156,5 +166,31 @@ class Nagrywanie : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    // Funkcja wysyłająca audio na podstawie ścieżki do pliku
+    fun uploadAudioFile(filePath: String) {
+        val file = File(filePath)
+        if (!file.exists()) {
+            Log.e("Upload", "Plik nie istnieje: $filePath")
+            return
+        }
+
+        val requestFile = file.asRequestBody("audio/wav".toMediaTypeOrNull()) // lub inny typ
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        RetrofitClient.audioUploadService.uploadAudio(body)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.isSuccessful) {
+                        Log.d("Upload", "Sukces: ${response.body()?.string()}")
+                    } else {
+                        Log.e("Upload", "Błąd odpowiedzi: ${response.code()} - ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("Upload", "Błąd: ${t.message}", t)
+                }
+            })
     }
 }

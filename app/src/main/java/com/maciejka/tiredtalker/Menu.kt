@@ -1,11 +1,22 @@
 package com.maciejka.tiredtalker
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.maciejka.tiredtalker.api.LimitSlow
 import com.maciejka.tiredtalker.databinding.FragmentMenuBinding
+import com.maciejka.tiredtalker.network.RetrofitClient
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 
 //TO DO: Dodać nagrywanie głosu, jeśli weryfikacja głosu została przeprowadzona. Zastanowić się, czy to nie powinno być w main
 // Dodać obsługę przesyłania plików dźwiękowych do serwera
@@ -41,6 +52,22 @@ class Menu : Fragment() {
 
         if (limitSlow != null) {
             binding.displayText.text = "Otrzymana liczba: $limitSlow"
+            // Wyślij limit do serwera
+            val limitObj = LimitSlow(limitSlow)
+            RetrofitClient.limitApi.sendWordLimit(limitObj)
+                .enqueue(object : Callback<Void> {
+                    override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                        if (response.isSuccessful) {
+                            Log.d("MenuFragment", "Limit sent successfully")
+                        } else {
+                            Log.e("MenuFragment", "Failed: ${response.code()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Log.e("MenuFragment", "Error: ${t.message}")
+                    }
+                })
         } else {
             binding.displayText.text = "Kliknij Limit słów"
         }
@@ -64,6 +91,9 @@ class Menu : Fragment() {
         binding.settingsButton.setOnClickListener {
             pokazFragment(Ustawienia())
         }
+        binding.buttonTest.setOnClickListener {
+            sendTestAudioFile()
+        }
 
     }
 
@@ -77,5 +107,55 @@ class Menu : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    // Funkcja wysyłająca audio na podstawie ścieżki do pliku
+    fun uploadAudioFile(filePath: String) {
+        val file = File(filePath)
+        if (!file.exists()) {
+            Log.e("Upload", "Plik nie istnieje: $filePath")
+            return
+        }
+
+        val requestFile = file.asRequestBody("audio/wav".toMediaTypeOrNull()) // lub inny typ
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+
+        RetrofitClient.audioUploadService.uploadAudio(body)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.isSuccessful) {
+                        Log.d("Upload", "Sukces: ${response.body()?.string()}")
+                    } else {
+                        Log.e("Upload", "Błąd odpowiedzi: ${response.code()} - ${response.errorBody()?.string()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    Log.e("Upload", "Błąd: ${t.message}", t)
+                }
+            })
+    }
+    // Funkcja testująca wysyłkę pliku z res/raw
+    private fun sendTestAudioFile() {
+        val cacheDir = context?.cacheDir ?: return
+        val tempFile = File.createTempFile("test_audio", ".3gp", cacheDir)
+        try {
+            // 1. Załaduj plik z res/raw
+            val inputStream = resources.openRawResource(R.raw.test_audio)
+
+            // 2. Zapisz go tymczasowo w cacheDir
+            val tempFile = File.createTempFile("test_audio", ".3gp", cacheDir)
+            tempFile.outputStream().use { fileOut ->
+                inputStream.copyTo(fileOut)
+            }
+
+            Log.d("Upload", "Plik tymczasowy zapisany: ${tempFile.absolutePath} (${tempFile.length()} B)")
+
+            // 3. Przekaż do głównej funkcji wysyłki
+            uploadAudioFile(tempFile.absolutePath)
+
+        } catch (e: Exception) {
+            Log.e("Upload", "Błąd przygotowania pliku: ${e.message}", e)
+        }
     }
 }

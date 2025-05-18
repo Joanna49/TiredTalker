@@ -9,7 +9,7 @@ import retrofit2.http.Part
 
 interface AudioUploadService {
     @Multipart
-    @POST("/upload")
+    @POST("/upload-audio")
     fun uploadAudio(
         @Part file: MultipartBody.Part
     ): Call<ResponseBody>

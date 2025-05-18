@@ -1,6 +1,7 @@
 package com.maciejka.tiredtalker.network
 
 import com.maciejka.tiredtalker.api.AudioUploadService
+import com.maciejka.tiredtalker.api.LimitService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit
 object RetrofitClient {
 
     //private const val BASE_URL = "http://localhost:8000/" // Zamień na URL swojego serwera
-    private const val BASE_URL = "http://192.168.1.1:8000/"
+    private const val BASE_URL = "http://192.168.1.55:8000/"
 
     private val retrofit by lazy {
         Retrofit.Builder()
@@ -27,5 +28,9 @@ object RetrofitClient {
     // Funkcja do uzyskania instancji AudioUploadService
     val audioUploadService: AudioUploadService by lazy {
         retrofit.create(AudioUploadService::class.java)
+    }
+    // Wystawienie instancji API
+    val limitApi: LimitService by lazy {
+        retrofit.create(LimitService::class.java)
     }
 }
