@@ -2,6 +2,7 @@ package com.maciejka.tiredtalker.network
 
 import com.maciejka.tiredtalker.api.AudioUploadService
 import com.maciejka.tiredtalker.api.LimitService
+import com.maciejka.tiredtalker.api.RemWordService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,8 +30,12 @@ object RetrofitClient {
     val audioUploadService: AudioUploadService by lazy {
         retrofit.create(AudioUploadService::class.java)
     }
-    // Wystawienie instancji API
+    // Wystawienie instancji limitAPI
     val limitApi: LimitService by lazy {
         retrofit.create(LimitService::class.java)
+    }
+//Wstawienie instancji RemWordService
+    val remApi: RemWordService by lazy {
+        retrofit.create(RemWordService::class.java)
     }
 }

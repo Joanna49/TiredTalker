@@ -6,9 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.lifecycleScope
 import com.maciejka.tiredtalker.api.LimitSlow
+
 import com.maciejka.tiredtalker.databinding.FragmentMenuBinding
 import com.maciejka.tiredtalker.network.RetrofitClient
+import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -20,10 +23,6 @@ import java.io.File
 
 //TO DO: Dodać nagrywanie głosu, jeśli weryfikacja głosu została przeprowadzona. Zastanowić się, czy to nie powinno być w main
 // Dodać obsługę przesyłania plików dźwiękowych do serwera
-//Pozostało: Limit - liczba wypowiedzianych słów
-
-// W pythonie: Rest API google speech to text
-//W pythonie: wysłanie liczby z powrotem do aplikacji
 
 class Menu : Fragment() {
 
@@ -51,7 +50,7 @@ class Menu : Fragment() {
         val limitSlow = arguments?.getInt("user_number")
 
         if (limitSlow != null) {
-            binding.displayText.text = "Otrzymana liczba: $limitSlow"
+            binding.displayText.text = "$limitSlow"
             // Wyślij limit do serwera
             val limitObj = LimitSlow(limitSlow)
             RetrofitClient.limitApi.sendWordLimit(limitObj)
@@ -71,10 +70,29 @@ class Menu : Fragment() {
         } else {
             binding.displayText.text = "Kliknij Limit słów"
         }
-        //TO DO
-        //Wyświetlenie liczby pozostałych słów
-        //val pozSlow = limitSlow - liczSlow
-        //binding.text4.text = "costam: $liczSlow"
+
+        // Odebranie liczby pozostałych słów z serwera
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.remApi.getRemainingWords()
+                if (response.isSuccessful) {
+                    val remaining = response.body()?.remaining_words ?: "Kliknij"
+
+                    if (isAdded && _binding != null) {
+                        _binding?.displaynumber?.text = "$remaining"
+                    }
+                } else {
+                    if (isAdded && _binding != null) {
+                        _binding?.displaynumber?.text = "Błąd serwera: ${response.code()}"
+                    }
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                if (isAdded && _binding != null) {
+                    _binding?.displaynumber?.text = "Błąd połączenia: ${e.localizedMessage}"
+                }
+            }
+        }
 
         //Obsługa przycisków
         binding.buttonRozpoznaj.setOnClickListener {
@@ -158,4 +176,5 @@ class Menu : Fragment() {
             Log.e("Upload", "Błąd przygotowania pliku: ${e.message}", e)
         }
     }
+
 }
