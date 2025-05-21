@@ -10,13 +10,12 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-    //private const val BASE_URL = "http://localhost:8000/" // Zamień na URL swojego serwera
     private const val BASE_URL = "http://192.168.1.55:8000/"
 
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()) // Używamy Gson do konwersji JSON
+            .addConverterFactory(GsonConverterFactory.create())
             .client(
                 OkHttpClient.Builder()
                     .connectTimeout(30, TimeUnit.SECONDS) // Czas oczekiwania na połączenie

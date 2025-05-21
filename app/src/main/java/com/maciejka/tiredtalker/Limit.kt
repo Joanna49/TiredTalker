@@ -6,13 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.maciejka.tiredtalker.databinding.FragmentLimitBinding
 
 
 class Limit : Fragment() {
 
+
+
     private var _binding: FragmentLimitBinding? = null
     private val binding get() = _binding!!
+    /* TO DO CHYBA wymaga usunięcia
+    // == jego
+    val sharedViewModel = ViewModelProvider(requireActivity())[SharedDataViewModel::class.java]
+
+
+    // == KONIEC JEGO
+    */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,6 +41,7 @@ class Limit : Fragment() {
         }
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.buttonZapis.setOnClickListener {
@@ -39,8 +50,14 @@ class Limit : Fragment() {
             val number = inputText.toIntOrNull()
 
             if (number != null) {
+                /* == TO DO CHYBA USUNĄĆ
+                // JEGO do spełnienia warunku wysyłki
+                sharedViewModel.wordLimit.value = number
+                // Koniec JEGO
+                */
                 val bundle = Bundle().apply {
                     putInt("user_number", number)
+
                 }
 
                 val displayFragment = Menu()
@@ -60,6 +77,8 @@ class Limit : Fragment() {
                 Toast.makeText(context, "Wprowadź poprawną liczbę", Toast.LENGTH_SHORT).show()
             }
         }
+
+
         //Obsługa powrotu do menu
         binding.backButton.setOnClickListener {
             pokazFragment(Menu())

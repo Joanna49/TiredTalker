@@ -1,5 +1,6 @@
 package com.maciejka.tiredtalker
 
+import kotlinx.coroutines.CompletableDeferred
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,19 +16,36 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import com.maciejka.tiredtalker.api.AudioUploadService
 import com.maciejka.tiredtalker.network.RetrofitClient
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
 import java.io.IOException
+import kotlinx.coroutines.launch
+import java.util.concurrent.CountDownLatch
 
 
 class Nagrywanie : Fragment() {
+
+
+    //JEGO
+    private var isReferenceRecorded = false
+    private var referenceFilePath: String? = null
+    private var isCycleStarted = false
+    private val coroutineScope = CoroutineScope(Dispatchers.IO + Job())
+    private lateinit var sharedViewModel: SharedDataViewModel
+    //KONIEC JEGO
 
     private var mediaRecorder: MediaRecorder? = null
     private var _binding: FragmentNagrywanieBinding? = null
@@ -40,7 +58,7 @@ class Nagrywanie : Fragment() {
     ): View? {
         _binding = FragmentNagrywanieBinding.inflate(inflater, container, false)
 
-        //Rozpoczęcie nagrywania po kliknięciu na przycisk
+        // == UI - PRZYCISK ==
         binding.nagrywanieBtn.setOnClickListener {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.RECORD_AUDIO)
                 == PackageManager.PERMISSION_GRANTED) {
@@ -77,8 +95,14 @@ class Nagrywanie : Fragment() {
 
         return binding.root
     }
-    //Funkcja obsługi nagrywania
+
+
+
+    // == START NAGRYWANIA ==
     private fun startRecording() {
+        currentFilePath = "${requireContext().externalCacheDir?.absolutePath}/reference_${System.currentTimeMillis()}.3gp"
+        val file = File(currentFilePath!!)
+
         mediaRecorder = MediaRecorder()
         mediaRecorder?.apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -91,12 +115,20 @@ class Nagrywanie : Fragment() {
                 start()
                 Toast.makeText(requireContext(), "Nagrywanie...", Toast.LENGTH_SHORT).show()
 
+
+
                 // Zatrzymaj po 15 sekundach
                 Handler(Looper.getMainLooper()).postDelayed({
                     stopRecording()
                     currentFilePath?.let { path ->
-                    (activity as? Nagrywanie)?.uploadAudioFile(path)
-                }
+                        uploadAudioFile(file, "reference", { response ->
+                            Log.d("UploadSuccess", "Serwer zwrócił: $response")
+
+                            sharedViewModel.setReferenceRecorded(true) // Jeśli chcesz zasygnalizować, że plik referencyjny już jest
+                        }, { error ->
+                            Log.e("UploadError", "Błąd: $error")
+                        })
+                    }
                     pokazFragment(Rozpoznanie())
                 }, 15_000)
 
@@ -107,7 +139,7 @@ class Nagrywanie : Fragment() {
     }
 
 
-    //Funkcja kończąca nagrywanie
+    // == STOP NAGRYWANIA ==
     private fun stopRecording() {
         try {
             mediaRecorder?.apply {
@@ -121,25 +153,94 @@ class Nagrywanie : Fragment() {
         Toast.makeText(requireContext(), "Nagrywanie zakończone", Toast.LENGTH_SHORT).show()
     }
 
-    //Funkcja zapisująca plik
+
+    private fun startCyclicRecording() {
+        coroutineScope.launch(Dispatchers.Main) {
+            var shouldContinue = true
+
+            while (shouldContinue) {
+                val path = "${requireContext().externalCacheDir}/cycle_${System.currentTimeMillis()}.3gp"
+                val deferred = CompletableDeferred<File?>()
+
+                recordAudio(15_000, path) { file -> deferred.complete(file) }
+
+                val recordedFile = deferred.await()
+                recordedFile?.let {
+                    uploadAudioFile(it, "cycle", { remaining ->
+                        Log.d("Recording", "Pozostało słów: $remaining")
+                        shouldContinue = remaining.toIntOrNull()?.let { it > 0 } ?: false
+                    }, { error ->
+                        Log.e("UploadError", error)
+                        shouldContinue = false
+                    })
+                }
+            }
+
+            Log.i("Recording", "Zebrano wystarczająco słów. Koniec nagrywania.")
+            pokazFragment(Menu()) // lub inna akcja kończąca
+        }
+    }
+
+    private fun recordOnce(): File {
+        val file = File("${context?.externalCacheDir}/cycle_${System.currentTimeMillis()}.3gp")
+        val latch = CountDownLatch(1)
+
+
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setOutputFile(file.absolutePath)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+            prepare()
+            start()
+        }
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            stopCycleRecording()
+            latch.countDown()
+        }, 15_000)
+
+        latch.await() // Blokuje do końca nagrania
+        return file
+    }
+
+    //  == STOP NAGRYWANIA W CYKLACH ==
+    private fun stopCycleRecording() {
+        try {
+            mediaRecorder?.apply {
+                stop()
+                release()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        mediaRecorder = null
+    }
+
+
+    // == ZAPIS PLIKU ==
     private fun getOutputFilePath(): String {
         val fileName = "recording_${System.currentTimeMillis()}.3gp"
         val file = File(requireContext().filesDir, fileName)
         return file.absolutePath
     }
 
-    //Funkcja wysyłająca plik do serwera
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+// == JEGO == // ==   SPRAWDZENIE OBECNOŚCI LIMITU I REFERENCJI ==
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedDataViewModel::class.java)
+
+        sharedViewModel.wordLimit.observe(viewLifecycleOwner) {
+            checkAndStartCycle()
+        }
+
+        sharedViewModel.isReferenceRecorded.observe(viewLifecycleOwner) {
+            checkAndStartCycle()
+        }
+// == UI ==
         //Obraz fal dźwiękowych niewidoczny przy wejściu
         binding.sound1.visibility = View.GONE
         binding.sound2.visibility = View.GONE
@@ -156,6 +257,7 @@ class Nagrywanie : Fragment() {
 
     }
 
+    // == ZMIANA FRAGMENTU ==
     private fun pokazFragment(fragment: Fragment) {
         val fragmentTransaction = parentFragmentManager.beginTransaction()
         fragmentTransaction.addToBackStack(null)
@@ -163,33 +265,72 @@ class Nagrywanie : Fragment() {
         fragmentTransaction.commit()
     }
 
+    private fun checkAndStartCycle() {
+        val isRecorded = sharedViewModel.isReferenceRecorded.value ?: false
+        val wordLimit = sharedViewModel.wordLimit.value
+
+        if (isRecorded && wordLimit != null && wordLimit > 0 && !isCycleStarted) {
+            isCycleStarted = true
+            startCyclicRecording()
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-    // Funkcja wysyłająca audio na podstawie ścieżki do pliku
-    fun uploadAudioFile(filePath: String) {
-        val file = File(filePath)
-        if (!file.exists()) {
-            Log.e("Upload", "Plik nie istnieje: $filePath")
-            return
+
+    // JEGO FUNKCJA DO NAGRYWANIA
+    private fun recordAudio(durationMillis: Long, outputPath: String, onComplete: (File?) -> Unit) {
+        val file = File(outputPath)
+        mediaRecorder = MediaRecorder().apply {
+            setAudioSource(MediaRecorder.AudioSource.MIC)
+            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+            setOutputFile(file.absolutePath)
+            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+
+            try {
+                prepare()
+                start()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                onComplete(null)
+                return
+            }
         }
 
-        val requestFile = file.asRequestBody("audio/wav".toMediaTypeOrNull()) // lub inny typ
+        Handler(Looper.getMainLooper()).postDelayed({
+            try {
+                mediaRecorder?.apply {
+                    stop()
+                    release()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            mediaRecorder = null
+            onComplete(file)
+        }, durationMillis)
+    }
+    // == WYSYŁANIE NA PODSTAWIE ŚCIEŻKI DO PLIKU ==
+    fun uploadAudioFile(file: File, purpose: String, onSuccess: (String) -> Unit, onError: (String) -> Unit) {
+        val requestFile = file.asRequestBody("audio/3gp".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        val purposeBody = purpose.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        RetrofitClient.audioUploadService.uploadAudio(body)
+        RetrofitClient.audioUploadService.uploadAudio(body, purposeBody)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
-                        Log.d("Upload", "Sukces: ${response.body()?.string()}")
+                        val responseText = response.body()?.string() ?: "Brak odpowiedzi"
+                        onSuccess(responseText)
                     } else {
-                        Log.e("Upload", "Błąd odpowiedzi: ${response.code()} - ${response.errorBody()?.string()}")
+                        onError("Błąd serwera: ${response.code()}")
                     }
                 }
 
                 override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                    Log.e("Upload", "Błąd: ${t.message}", t)
+                    onError("Błąd połączenia: ${t.message}")
                 }
             })
     }

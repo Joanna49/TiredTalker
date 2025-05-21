@@ -11,10 +11,12 @@ import com.maciejka.tiredtalker.api.LimitSlow
 
 import com.maciejka.tiredtalker.databinding.FragmentMenuBinding
 import com.maciejka.tiredtalker.network.RetrofitClient
+import com.maciejka.tiredtalker.ui.Pomoc
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
@@ -127,18 +129,19 @@ class Menu : Fragment() {
         _binding = null
     }
 
-    // Funkcja wysyłająca audio na podstawie ścieżki do pliku
+    /*TO DO: Sprawdzić, czy to trzeba usuwać
+     // == Funkcja wysyłająca audio na podstawie ścieżki do pliku ==
     fun uploadAudioFile(filePath: String) {
         val file = File(filePath)
         if (!file.exists()) {
             Log.e("Upload", "Plik nie istnieje: $filePath")
             return
         }
-
+        val purpose = "enroll" // lub "verify"
         val requestFile = file.asRequestBody("audio/wav".toMediaTypeOrNull()) // lub inny typ
-        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
-
-        RetrofitClient.audioUploadService.uploadAudio(body)
+        val purposePart = purpose.toRequestBody("text/plain".toMediaTypeOrNull())
+        val audioPart = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        RetrofitClient.audioUploadService.uploadAudio(audioPart, purposePart)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
@@ -152,7 +155,7 @@ class Menu : Fragment() {
                     Log.e("Upload", "Błąd: ${t.message}", t)
                 }
             })
-    }
+    }*/
     // Funkcja testująca wysyłkę pliku z res/raw
     private fun sendTestAudioFile() {
         val cacheDir = context?.cacheDir ?: return
@@ -162,15 +165,17 @@ class Menu : Fragment() {
             val inputStream = resources.openRawResource(R.raw.test_audio)
 
             // 2. Zapisz go tymczasowo w cacheDir
-            val tempFile = File.createTempFile("test_audio", ".3gp", cacheDir)
             tempFile.outputStream().use { fileOut ->
                 inputStream.copyTo(fileOut)
             }
 
             Log.d("Upload", "Plik tymczasowy zapisany: ${tempFile.absolutePath} (${tempFile.length()} B)")
 
+            /* TO DO Sprawdzić czy to trzeba usunąć
             // 3. Przekaż do głównej funkcji wysyłki
             uploadAudioFile(tempFile.absolutePath)
+
+             */
 
         } catch (e: Exception) {
             Log.e("Upload", "Błąd przygotowania pliku: ${e.message}", e)

@@ -1,10 +1,12 @@
-package com.maciejka.tiredtalker
+package com.maciejka.tiredtalker.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.maciejka.tiredtalker.Menu
+import com.maciejka.tiredtalker.R
 import com.maciejka.tiredtalker.databinding.FragmentPomocBinding
 
 

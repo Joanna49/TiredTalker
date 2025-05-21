@@ -1,8 +1,9 @@
 package com.maciejka.tiredtalker
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.maciejka.tiredtalker.databinding.ActivityMainBinding
+
 
 
 //Binding
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(binding.fragmentContainer.id, ekranPowitalny())
+                .replace(binding.fragmentContainer.id, EkranPowitalny())
                 .commit()
         }
 
