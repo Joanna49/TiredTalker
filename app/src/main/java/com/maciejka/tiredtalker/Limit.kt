@@ -16,13 +16,9 @@ class Limit : Fragment() {
 
     private var _binding: FragmentLimitBinding? = null
     private val binding get() = _binding!!
-    /* TO DO CHYBA wymaga usunięcia
-    // == jego
-    val sharedViewModel = ViewModelProvider(requireActivity())[SharedDataViewModel::class.java]
 
+    private lateinit var sharedViewModel: SharedDataViewModel
 
-    // == KONIEC JEGO
-    */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,7 +39,10 @@ class Limit : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedDataViewModel::class.java)
         binding.buttonZapis.setOnClickListener {
 
             val inputText = binding.numberInput.text.toString()
@@ -52,9 +51,10 @@ class Limit : Fragment() {
             if (number != null) {
                 /* == TO DO CHYBA USUNĄĆ
                 // JEGO do spełnienia warunku wysyłki
-                sharedViewModel.wordLimit.value = number
+
                 // Koniec JEGO
                 */
+                sharedViewModel.wordLimit.value = number
                 val bundle = Bundle().apply {
                     putInt("user_number", number)
 

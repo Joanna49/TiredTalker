@@ -22,6 +22,7 @@ import com.maciejka.tiredtalker.network.RetrofitClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -33,6 +34,7 @@ import retrofit2.Response
 import java.io.File
 import java.io.IOException
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.CountDownLatch
 
 
@@ -154,78 +156,34 @@ class Nagrywanie : Fragment() {
 
             while (shouldContinue) {
                 val path = "${requireContext().externalCacheDir}/cycle_${System.currentTimeMillis()}.3gp"
-                val deferred = CompletableDeferred<File?>()
+                val recordedFile = withContext(Dispatchers.IO) { recordAudio(15_000, path) }
 
-                recordAudio(15_000, path) { file -> deferred.complete(file) }
-
-                val recordedFile = deferred.await()
                 if (recordedFile != null && recordedFile.exists()) {
                     Log.d("CyclicRecording", "Plik do wysłania: ${recordedFile.absolutePath}, size: ${recordedFile.length()}")
+
+                    val uploadCompleted = CompletableDeferred<Boolean>()
 
                     uploadAudioFile(recordedFile, "cycle", { remaining ->
                         Log.d("UploadSuccess", "Pozostało słów: $remaining")
                         shouldContinue = remaining.toIntOrNull()?.let { it > 0 } ?: false
+                        uploadCompleted.complete(true)
                     }, { error ->
                         Log.e("UploadError", "Błąd: $error")
                         shouldContinue = false
+                        uploadCompleted.complete(false)
                     })
+
+                    uploadCompleted.await()
                 } else {
                     Log.e("CyclicRecording", "Plik nie istnieje lub jest null.")
                     shouldContinue = false
                 }
-                recordedFile?.let {
-                    uploadAudioFile(it, "cycle", { remaining ->
-                        Log.d("Recording", "Pozostało słów: $remaining")
-                        shouldContinue = remaining.toIntOrNull()?.let { it > 0 } ?: false
-                    }, { error ->
-                        Log.e("UploadError", error)
-                        shouldContinue = false
-                    })
-                }
             }
 
             Log.i("Recording", "Zebrano wystarczająco słów. Koniec nagrywania.")
-            pokazFragment(Menu()) // lub inna akcja kończąca
+            pokazFragment(Menu())
         }
     }
-
-    private fun recordOnce(): File {
-        val file = File("${context?.externalCacheDir}/cycle_${System.currentTimeMillis()}.3gp")
-        val latch = CountDownLatch(1)
-
-
-        mediaRecorder = MediaRecorder().apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(currentFilePath)
-            setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-            prepare()
-            start()
-        }
-
-        Handler(Looper.getMainLooper()).postDelayed({
-            stopCycleRecording()
-            latch.countDown()
-        }, 15_000)
-
-        latch.await() // Blokuje do końca nagrania
-        return file
-    }
-
-    //  == STOP NAGRYWANIA W CYKLACH ==
-    private fun stopCycleRecording() {
-        try {
-            mediaRecorder?.apply {
-                stop()
-                release()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        mediaRecorder = null
-    }
-
-
 
 /* TO DO CHYBA USUNĄĆ
 
@@ -291,8 +249,7 @@ class Nagrywanie : Fragment() {
         _binding = null
     }
 
-    // JEGO FUNKCJA DO NAGRYWANIA DO NAGRAŃ CYKLICZNYCH
-    private fun recordAudio(durationMillis: Long, outputPath: String, onComplete: (File?) -> Unit) {
+    suspend fun recordAudio(durationMillis: Long, outputPath: String): File? = withContext(Dispatchers.IO) {
         val file = File(outputPath)
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
@@ -305,23 +262,25 @@ class Nagrywanie : Fragment() {
                 start()
             } catch (e: IOException) {
                 e.printStackTrace()
-                onComplete(null)
-                return
+                return@withContext null
             }
         }
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            try {
-                mediaRecorder?.apply {
-                    stop()
-                    release()
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
+        delay(durationMillis)
+
+        try {
+            mediaRecorder?.apply {
+                stop()
+                release()
             }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return@withContext null
+        } finally {
             mediaRecorder = null
-            onComplete(file)
-        }, durationMillis)
+        }
+
+        return@withContext file
     }
     // == WYSYŁANIE PLIKÓW CYKLICZNYCH NA PODSTAWIE ŚCIEŻKI DO PLIKU ==
     fun uploadAudioFile(file: File, purpose: String, onSuccess: (String) -> Unit, onError: (String) -> Unit) {
