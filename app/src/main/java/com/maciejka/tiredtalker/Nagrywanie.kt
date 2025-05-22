@@ -100,14 +100,13 @@ class Nagrywanie : Fragment() {
 
     // == START NAGRYWANIA ==
     private fun startRecording() {
-        currentFilePath = "${requireContext().externalCacheDir?.absolutePath}/reference_${System.currentTimeMillis()}.3gp"
-        val file = File(currentFilePath!!)
+        val path = "${requireContext().externalCacheDir}/reference_${System.currentTimeMillis()}.3gp"
+        val file = File(path)
 
-        mediaRecorder = MediaRecorder()
-        mediaRecorder?.apply {
+        mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile("${requireContext().externalCacheDir?.absolutePath}/nagranie.3gp")
+            setOutputFile(path)  // <-- użyj tej samej ścieżki!
             setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
             try {
@@ -115,20 +114,15 @@ class Nagrywanie : Fragment() {
                 start()
                 Toast.makeText(requireContext(), "Nagrywanie...", Toast.LENGTH_SHORT).show()
 
-
-
-                // Zatrzymaj po 15 sekundach
                 Handler(Looper.getMainLooper()).postDelayed({
                     stopRecording()
-                    currentFilePath?.let { path ->
-                        uploadAudioFile(file, "reference", { response ->
-                            Log.d("UploadSuccess", "Serwer zwrócił: $response")
+                    uploadReferenceFile(file, "enroll", { response ->
+                        Log.d("UploadSuccess", "Serwer zwrócił: $response")
+                        sharedViewModel.setReferenceRecorded(true)
+                    }, { error ->
+                        Log.e("UploadError", "Błąd: $error")
+                    })
 
-                            sharedViewModel.setReferenceRecorded(true) // Jeśli chcesz zasygnalizować, że plik referencyjny już jest
-                        }, { error ->
-                            Log.e("UploadError", "Błąd: $error")
-                        })
-                    }
                     pokazFragment(Rozpoznanie())
                 }, 15_000)
 
@@ -165,6 +159,20 @@ class Nagrywanie : Fragment() {
                 recordAudio(15_000, path) { file -> deferred.complete(file) }
 
                 val recordedFile = deferred.await()
+                if (recordedFile != null && recordedFile.exists()) {
+                    Log.d("CyclicRecording", "Plik do wysłania: ${recordedFile.absolutePath}, size: ${recordedFile.length()}")
+
+                    uploadAudioFile(recordedFile, "cycle", { remaining ->
+                        Log.d("UploadSuccess", "Pozostało słów: $remaining")
+                        shouldContinue = remaining.toIntOrNull()?.let { it > 0 } ?: false
+                    }, { error ->
+                        Log.e("UploadError", "Błąd: $error")
+                        shouldContinue = false
+                    })
+                } else {
+                    Log.e("CyclicRecording", "Plik nie istnieje lub jest null.")
+                    shouldContinue = false
+                }
                 recordedFile?.let {
                     uploadAudioFile(it, "cycle", { remaining ->
                         Log.d("Recording", "Pozostało słów: $remaining")
@@ -189,7 +197,7 @@ class Nagrywanie : Fragment() {
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(file.absolutePath)
+            setOutputFile(currentFilePath)
             setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
             prepare()
             start()
@@ -218,13 +226,16 @@ class Nagrywanie : Fragment() {
     }
 
 
+
+/* TO DO CHYBA USUNĄĆ
+
     // == ZAPIS PLIKU ==
     private fun getOutputFilePath(): String {
         val fileName = "recording_${System.currentTimeMillis()}.3gp"
         val file = File(requireContext().filesDir, fileName)
         return file.absolutePath
     }
-
+*/
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -280,7 +291,7 @@ class Nagrywanie : Fragment() {
         _binding = null
     }
 
-    // JEGO FUNKCJA DO NAGRYWANIA
+    // JEGO FUNKCJA DO NAGRYWANIA DO NAGRAŃ CYKLICZNYCH
     private fun recordAudio(durationMillis: Long, outputPath: String, onComplete: (File?) -> Unit) {
         val file = File(outputPath)
         mediaRecorder = MediaRecorder().apply {
@@ -312,13 +323,35 @@ class Nagrywanie : Fragment() {
             onComplete(file)
         }, durationMillis)
     }
-    // == WYSYŁANIE NA PODSTAWIE ŚCIEŻKI DO PLIKU ==
+    // == WYSYŁANIE PLIKÓW CYKLICZNYCH NA PODSTAWIE ŚCIEŻKI DO PLIKU ==
     fun uploadAudioFile(file: File, purpose: String, onSuccess: (String) -> Unit, onError: (String) -> Unit) {
         val requestFile = file.asRequestBody("audio/3gp".toMediaTypeOrNull())
         val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
         val purposeBody = purpose.toRequestBody("text/plain".toMediaTypeOrNull())
 
         RetrofitClient.audioUploadService.uploadAudio(body, purposeBody)
+            .enqueue(object : Callback<ResponseBody> {
+                override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                    if (response.isSuccessful) {
+                        val responseText = response.body()?.string() ?: "Brak odpowiedzi"
+                        onSuccess(responseText)
+                    } else {
+                        onError("Błąd serwera: ${response.code()}")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                    onError("Błąd połączenia: ${t.message}")
+                }
+            })
+    }
+    // == WYSYŁANIE PLIKU REFERENCYJNEGO NA PODSTAWIE ŚCIEŻKI DO PLIKÓW ==
+    fun uploadReferenceFile(file: File, purpose: String, onSuccess: (String) -> Unit, onError: (String) -> Unit) {
+        val requestFile = file.asRequestBody("audio/3gp".toMediaTypeOrNull())
+        val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+        val purposeBody = purpose.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        RetrofitClient.audioUploadService.uploadReferenceAudio(body, purposeBody)
             .enqueue(object : Callback<ResponseBody> {
                 override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                     if (response.isSuccessful) {
