@@ -5,13 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.maciejka.tiredtalker.Menu
 import com.maciejka.tiredtalker.R
+import com.maciejka.tiredtalker.SharedDataViewModel
 import com.maciejka.tiredtalker.databinding.FragmentPomocBinding
+import com.maciejka.tiredtalker.Limit
 
 
 class Pomoc : Fragment() {
 
+    private lateinit var sharedViewModel: SharedDataViewModel
+    private var wordLimit: Int = 0
     private var _binding: FragmentPomocBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -33,6 +38,13 @@ class Pomoc : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedDataViewModel::class.java)
+        wordLimit = sharedViewModel.wordLimit.value ?: 0
+
+        if (wordLimit > 0) {
+
+        }
 
         binding.backButton.setOnClickListener {
             pokazFragment(Menu())

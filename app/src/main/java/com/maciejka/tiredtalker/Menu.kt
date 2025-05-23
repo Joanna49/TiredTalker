@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.maciejka.tiredtalker.api.LimitSlow
 
@@ -28,6 +29,8 @@ import java.io.File
 
 class Menu : Fragment() {
 
+    private lateinit var sharedViewModel: SharedDataViewModel
+    private var wordLimit: Int = 0
     private var _binding: FragmentMenuBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -48,6 +51,12 @@ class Menu : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedDataViewModel::class.java)
+        wordLimit = sharedViewModel.wordLimit.value ?: 0
+
+        if (wordLimit > 0) {
+
+        }
         //Odebranie liczby wprowadzonej w oknie Limit
         val limitSlow = arguments?.getInt("user_number")
 

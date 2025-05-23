@@ -49,11 +49,7 @@ class Limit : Fragment() {
             val number = inputText.toIntOrNull()
 
             if (number != null) {
-                /* == TO DO CHYBA USUNĄĆ
-                // JEGO do spełnienia warunku wysyłki
 
-                // Koniec JEGO
-                */
                 sharedViewModel.wordLimit.value = number
                 val bundle = Bundle().apply {
                     putInt("user_number", number)
@@ -84,7 +80,7 @@ class Limit : Fragment() {
             pokazFragment(Menu())
 
         }
-        //Obraz fal dźwiękowych niewidoczny przy wejściu
+        //Obraz ticka po zapisaniu limitu niewidoczny przy wejściu
         binding.tickImage.visibility = View.GONE
     }
 

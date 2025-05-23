@@ -11,9 +11,12 @@ import com.maciejka.tiredtalker.databinding.FragmentUstawieniaBinding
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import androidx.lifecycle.ViewModelProvider
 
 class Ustawienia : Fragment() {
 
+    private lateinit var sharedViewModel: SharedDataViewModel
+    private var wordLimit: Int = 0
     private var _binding: FragmentUstawieniaBinding? = null
     private val binding get() = _binding!!
     private val PREFS_NAME = "AppSettings"
@@ -35,6 +38,13 @@ class Ustawienia : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedDataViewModel::class.java)
+        wordLimit = sharedViewModel.wordLimit.value ?: 0
+
+        if (wordLimit > 0) {
+
+        }
 
         binding.backButton.setOnClickListener {
             pokazFragment(Menu())

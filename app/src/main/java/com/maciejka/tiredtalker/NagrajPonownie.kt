@@ -32,6 +32,8 @@ class NagrajPonownie : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.backButton.setOnClickListener {
             pokazFragment(Menu())
 

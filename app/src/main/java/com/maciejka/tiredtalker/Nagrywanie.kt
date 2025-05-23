@@ -108,7 +108,7 @@ class Nagrywanie : Fragment() {
         mediaRecorder = MediaRecorder().apply {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-            setOutputFile(path)  // <-- użyj tej samej ścieżki!
+            setOutputFile(path)
             setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
 
             try {
@@ -199,7 +199,7 @@ class Nagrywanie : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-// == JEGO == // ==   SPRAWDZENIE OBECNOŚCI LIMITU I REFERENCJI ==
+// ==   SPRAWDZENIE OBECNOŚCI LIMITU I REFERENCJI ==
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedDataViewModel::class.java)
 
         sharedViewModel.wordLimit.observe(viewLifecycleOwner) {
